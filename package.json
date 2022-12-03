@@ -1,0 +1,39 @@
+{
+  "name": "traxo-be",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "description": "The official repository of Traxo.",
+  "license": "MIT",
+  "contributors": [
+    "Samson Okunola",
+    "Williams Sam"
+  ],
+  "dependencies": {
+    "cloudinary": "^1.32.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.7.5",
+    "multer": "1.4.5-lts.1",
+    "nodemailer": "^6.8.0",
+    "passport": "^0.6.0",
+    "uuid": "^9.0.0",
+    "validator": "^13.7.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.14",
+    "@types/jsonwebtoken": "^8.5.9",
+    "@types/multer": "^1.4.7",
+    "@types/node": "^18.11.10",
+    "@types/nodemailer": "^6.4.6",
+    "@types/uuid": "^9.0.0",
+    "@types/validator": "^13.7.10",
+    "typescript": "^4.9.3"
+  }
+}
