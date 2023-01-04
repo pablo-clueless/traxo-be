@@ -8,13 +8,14 @@ import cors from 'cors'
 
 import authRoutes from './routes/auth'
 import { wrap } from './middlewares/io'
+import employeeRoute from './routes/employee'
 import { sessionMiddleware } from './middlewares/session'
 
 const app: Express = express()
 const server = http.createServer(app)
 const io = new Server(server, {
     cors: {
-        origin: ['http://127.0.0.1:5174','http://localhost:5174'],
+        origin: ['http://127.0.0.1:5174','http://localhost:5174', '*'],
         allowedHeaders: ['Authorization']
     }
 })
@@ -40,8 +41,9 @@ db.on('error', console.error.bind(console, 'connection error: '))
 io.use(wrap(sessionMiddleware))
 io.on('connection', (socket: Socket) => console.log(`socket id: ${socket.id}`))
 
-app.get('/', async(req: Request, res: Response) => res.status(200).json({message: 'Welcome to Traxo Finance servers.'}))
+app.get('/', async(req: Request, res: Response) => res.send({message: 'Welcome to Traxo Finance servers.'}))
 
 app.use('/auth', authRoutes)
+app.use('/employees', employeeRoute)
 
 server.listen(PORT, () => console.log(`server running on port: ${PORT}`))

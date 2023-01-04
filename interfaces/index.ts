@@ -21,6 +21,7 @@ export interface IEmployee {
     accountCreated?: Date | string | null
     accountModified?: Date | string | null
     cards: Array<ICard>
+    designation: string
     email: string
     firstName: string
     lastName: string

@@ -1,13 +1,13 @@
-import mongoose from 'mongoose'
+import { Schema, Types, model} from 'mongoose'
 
 import { ISubscription } from '../interfaces'
 
-const subscriptionSchema = new mongoose.Schema<ISubscription>({
+const subscriptionSchema = new Schema<ISubscription>({
     accountCreated: {type: Date, default: Date.now, immutable: false},
     accountModified: {type: Date},
-    addeBy: {type: mongoose.Types.ObjectId, ref: 'User'},
+    addeBy: {type: Types.ObjectId, ref: 'User'},
     name: {type: String, required: true},
     policy: {type: String, default: 'strict'},
 })
 
-export const Subscription = mongoose.model<ISubscription>('Subscription', subscriptionSchema)
+export const Subscription = model<ISubscription>('Subscription', subscriptionSchema)

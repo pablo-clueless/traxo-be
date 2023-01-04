@@ -1,8 +1,8 @@
-import mongoose from 'mongoose'
+import { Schema, Types, model} from 'mongoose'
 
 import { IBudget } from '../interfaces'
 
-const budgetSchema = new mongoose.Schema<IBudget>({
+const budgetSchema = new Schema<IBudget>({
     accountCreated: {type: Date, default: Date.now, immutable: false},
     accountModified: {type: Date},
     name: {type: String, required: true, unique: true},
@@ -11,4 +11,4 @@ const budgetSchema = new mongoose.Schema<IBudget>({
     type: {type: String, required: true}
 })
 
-export const Budget = mongoose.model<IBudget>('Budget', budgetSchema)
+export const Budget = model<IBudget>('Budget', budgetSchema)

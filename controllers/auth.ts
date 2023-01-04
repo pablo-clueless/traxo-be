@@ -65,8 +65,11 @@ const signup = async(req: Request, res: Response) => {
         if(isEmailInUse) return res.status(400).json({message: 'This email is registered. Try logging or use a different email.'})
         const saltRounds = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(password, saltRounds)
-        await User.create({firstName, lastName, email, password: hashedPassword})
-        return res.status(201).json({message: 'User created.'})
+        const user = new User({firstName, lastName, email, password: hashedPassword})
+        user.save(async(err) => {
+            if(err) return res.status(500).json({message: 'Unable to create user. Please try again later.', err})
+            return res.status(201).json({message: 'User created.'})
+        })
     } catch (error) {
         return res.status(500).json({message: 'Internal server error'})
     }
