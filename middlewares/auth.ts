@@ -21,11 +21,11 @@ export const verifyToken = (
                 .json({ message: 'No access token provided. Access denied!' })
         jwt.verify(token, secret, (err: any, decoded: any) => {
             if (err)
-                return res.status(401).json({ message: 'User is unathorized' })
-            ;(req as CustomRequest).userId = decoded.id
+                return res.status(401).json({ message: 'User is unathorized' });
+            (req as CustomRequest).userId = decoded.id
             next()
         })
     } catch (error: any) {
-        res.status(401).json({ message: 'Please authenticate.', error })
+        res.status(401).json({ message: 'User not authenticated.', error })
     }
 }
