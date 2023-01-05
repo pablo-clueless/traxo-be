@@ -1,6 +1,6 @@
 import { Request } from 'express'
-import { ObjectId } from "mongoose"
-import { JwtPayload } from "jsonwebtoken"
+import { JwtPayload } from 'jsonwebtoken'
+import { ObjectId } from 'mongoose'
 
 export interface IUser {
     userId: string
@@ -12,7 +12,7 @@ export interface IUser {
     companyId: string | ObjectId
     companyName: string
     companyImage: string
-    accessType: string
+    accessType: 'super-user' | 'admin'
     accountCreated?: Date | string | null
     accountModified?: Date | string | null
 }
