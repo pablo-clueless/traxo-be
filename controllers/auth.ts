@@ -6,7 +6,7 @@ import jwt, { Secret } from 'jsonwebtoken'
 import validator from 'validator'
 import { IUser } from '../interfaces'
 
-import { User } from '../schemas'
+import { Company, User } from '../schemas'
 
 dotenv.config()
 
@@ -87,8 +87,8 @@ const signin = async (req: Request, res: Response) => {
     }
 }
 
-const signup = async (req: Request<any, any, IUser, any>, res: Response) => {
-    const { firstName, lastName, email, password, companyName } = req.body
+const signup = async (req: Request, res: Response) => {
+    const { firstName, lastName, email, password, companyName, companyEmail } = req.body
 
     if (!firstName || !lastName || !email || !password || !companyName) {
         return res.status(400).json({ message: 'Incomplete credentials.' })
@@ -109,7 +109,7 @@ const signup = async (req: Request<any, any, IUser, any>, res: Response) => {
             })
         const saltRounds = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(password, saltRounds)
-        const user = new User<UserSignup>({
+        const user = new User({
             firstName,
             lastName,
             email,
@@ -117,14 +117,27 @@ const signup = async (req: Request<any, any, IUser, any>, res: Response) => {
             companyName,
             password: hashedPassword,
         })
-        user.save(async (err) => {
+        user.save(async (err: any) => {
             if (err) {
                 return res.status(500).json({
                     message: 'Unable to create user. Please try again later.',
                     err,
                 })
             }
-            return res.status(200).json({ message: 'User created.' })
+            const isEmailUnavailable = await Company.findOne({email: companyEmail})
+            if(isEmailUnavailable) return res.status(400).json({
+                message: 'This company email is in use. Login to continue or contact support.'
+            })
+            const company = new Company({companyName, email: companyEmail})
+            company.save(async(err: any) => {
+                if(err) {
+                    user.delete()
+                    return res.status(500).json({
+                        message: 'Error creating company. Please try again later.'
+                    })
+                }
+                return res.status(200).json({ message: 'Company profile created.' })
+            })
         })
     } catch (error) {
         return res.status(500).json({ message: 'Internal server error' })

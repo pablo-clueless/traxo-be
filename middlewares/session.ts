@@ -1,17 +1,17 @@
 import dotenv from 'dotenv'
 import session from 'express-session'
-import mongoStore from 'connect-mongodb-session'
+import MongoStore from 'connect-mongo'
 
 dotenv.config()
 
 const secret = process.env.JWT_SECRET as string
 const uri = process.env.MONGO_URI as string
 
-const { MongoDBStore } = mongoStore
-const store = new MongoDBStore({
-    uri,
-    collection: 'traxo-collection',
-    expires: 86400,
+const store = MongoStore.create({
+    mongoUrl: uri,
+    collectionName: 'traxo-client-sessions',
+    ttl: 1209600,
+    autoRemove: 'native',
 })
 
 export const sessionMiddleware = session({
