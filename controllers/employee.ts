@@ -87,7 +87,7 @@ const modifyEmployee = async(req: Request, res: Response) => {
             if(!result) return res.status(500).json({message: 'Unable to upload image.'})
             const employee = await Employee.find({_id: id})
             if(!employee) return res.status(404).json({message: 'Employee not found.'})
-            const updates = {firstName, lastName, email, designation, userImage: result.url}
+            const updates = {firstName, lastName, email, designation, userImage: result.secure_url}
             const updatedEmployee = await Employee.findOneAndUpdate({_id: id}, updates, {new: true})
             if(!updatedEmployee) return res.status(500).json({message: 'An error occurred.'})
             return res.status(200).json({message: 'Employee updated successfully.'})
