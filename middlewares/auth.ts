@@ -8,17 +8,10 @@ dotenv.config()
 
 const secret = process.env.JWT_SECRET as string
 
-export const verifyToken = (
-    req: Request,
-    res: Response,
-    next: NextFunction
-) => {
+export const verifyToken = ( req: Request, res: Response, next: NextFunction) => {
     try {
-        let token = <string>req.headers['x-access-token']
-        if (!token)
-            return res
-                .status(403)
-                .json({ message: 'No access token provided. Access denied!' })
+        let token = <string>req.headers['Access-Token']
+        if (!token) return res.status(403).json({ message: 'No access token provided. Access denied!' })
         jwt.verify(token, secret, (err: any, decoded: any) => {
             if (err)
                 return res.status(401).json({ message: 'User is unathorized' });

@@ -30,6 +30,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(sessionMiddleware)
 app.use(cors())
 app.use(morgan('common'))
+app.disable('x-powered-by')
 
 // mongo connection
 mongoose.connect(MONGO_URI)
