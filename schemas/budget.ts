@@ -5,6 +5,7 @@ import { IBudget } from '../interfaces'
 const budgetSchema = new Schema<IBudget>({
     accountCreated: {type: Date, default: Date.now, immutable: false},
     accountModified: {type: Date},
+    createdBy: {type: Types.ObjectId, ref: 'User'},
     name: {type: String, required: true, unique: true},
     policy: {type: String, default: 'strict'},
     spendLimit: {type: Number, required: true},

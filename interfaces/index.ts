@@ -12,6 +12,7 @@ export interface IUser {
     companyId: string | ObjectId
     companyName: string
     companyImage: string
+    companyRC: string
     accessType: 'super-user' | 'admin'
     accountCreated?: Date | string | null
     accountModified?: Date | string | null
@@ -42,6 +43,7 @@ export interface ICompany {
 }
 
 export interface IBudget {
+    createdBy: ObjectId
     name: string
     type: string
     spendLimit: number
