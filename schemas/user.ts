@@ -17,6 +17,7 @@ const userSchema = new Schema<IUser>(
         companyId: { type: Types.ObjectId, ref: 'Company' },
         companyImage: { type: String },
         companyName: { type: String, required: true },
+        companyRC: {type: String},
         email: {
             type: String,
             required: true,
